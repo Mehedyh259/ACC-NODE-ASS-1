@@ -20,17 +20,17 @@ module.exports = {
   },
   allUsers: async (req, res, next) => {
     try {
-      const { limit } = req.query;
+      const { s } = req.query;
       let users = await GET_USERS();
-      // Limit users
-      if (limit <= 0) {
+      // s users
+      if (s <= 0) {
         res
           .status(400)
           .send(
-            failed("Opps! You need to choose atleast 1 user for limit to work.")
+            failed("Opps! You need to choose atleast 1 user for s to work.")
           );
-      } else if (limit > 0) {
-        users = users.slice(0, limit);
+      } else if (s > 0) {
+        users = users.slice(0, s);
       }
 
       if (!users) {
@@ -40,8 +40,8 @@ module.exports = {
         .status(200)
         .send(
           success(
-            limit && users.length >= limit
-              ? `Get ${limit} user was successful.`
+            s && users.length >= s
+              ? `Get ${s} user was successful.`
               : "Get all the users was successful.",
             users
           )
